@@ -152,3 +152,31 @@
 
     Запобігання циклам: Якщо TTL стає рівним 0, пакет знищується. Це не дає йому вічно циркулювати в мережі у випадку помилок маршрутизації (петель), що могло б призвести до перевантаження каналів зв'язку.
 
+
+
+
+
+graph TD
+    subgraph "OSI Model & Data Flow"
+    L7[<b>7. Application</b><br/>HTTP, DNS, FTP<br/>Data: Data] 
+    L6[<b>6. Presentation</b><br/>SSL/TLS, JPEG, ASCII<br/>Data: Data]
+    L5[<b>5. Session</b><br/>NetBIOS, RPC<br/>Data: Data]
+    L4[<b>4. Transport</b><br/>TCP, UDP<br/>Data: <b>Segment</b>]
+    L3[<b>3. Network</b><br/>IP, ICMP<br/>Data: <b>Packet</b><br/>Device: <b>Router</b>]
+    L2[<b>2. Data Link</b><br/>Ethernet, MAC<br/>Data: <b>Frame</b><br/>Device: <b>Switch</b>]
+    L1[<b>1. Physical</b><br/>Cables, Wi-Fi<br/>Data: <b>Bit</b><br/>Device: <b>Hub/Repeater</b>]
+    end
+
+    %% Шлях пакета
+    User((Мій комп)) -->|HTTP| L7
+    L7 --> L4
+    L4 -->|TCP| L3
+    L3 -->|IP| L2
+    L2 -->|Ethernet| L1
+    L1 -->|Сигнал| Server((Web Server))
+
+    style L7 fill:#f96,stroke:#333
+    style L4 fill:#f96,stroke:#333
+    style L3 fill:#f96,stroke:#333
+    style L2 fill:#f96,stroke:#333
+    style L1 fill:#f96,stroke:#333
